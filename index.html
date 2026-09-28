@@ -14,11 +14,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=1790629382">
+  <link rel="stylesheet" href="style.css?v=1790631535">
 </head>
 <body>
   <div class="page-wrap">
-    <header>
+    <header class="endzone">
       <a class="wordmark-link fade-in" href="./" aria-label="Uprights home">
         <svg class="wordmark" viewBox="0 0 1000 118" role="img" aria-hidden="true">
           <text x="0" y="116" font-size="157" textLength="1000" lengthAdjust="spacing">UPRIGHTS</text>
@@ -27,41 +27,33 @@
     </header>
 
     <main>
-      <div class="field">
+      <div class="field"><span class="row-probe"></span>
         <section class="band hero" aria-label="Uprights">
-          <div class="pitch"><p>Paper Toss,<br>but it's a<br>field goal.</p></div>
           <div class="phone">
             <video src="media/gameplay-loop.mp4" poster="media/gameplay-poster.jpg" autoplay muted loop playsinline
                    aria-label="Uprights gameplay: flicking field goals in a night stadium"></video>
           </div>
-          <div class="cta"><a class="button" href="https://apps.apple.com/us/search?term=uprights">Download on the App Store</a></div>
+          <div class="cta"><a class="store-badge" href="https://apps.apple.com/app/id6817074074" aria-label="Download on the App Store">
+            <svg class="apple" viewBox="0 0 384 512" aria-hidden="true"><path fill="currentColor" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+            <span class="words"><small>Download on the</small><strong>App Store</strong></span>
+          </a></div>
         </section>
 
-        <section class="band trio" aria-label="Screens from the game">
-          <div class="phone left"><img src="media/03-crosswind.jpg" alt="A 36-yard attempt into a 17 mph wind"></div>
-          <div class="phone mid"><img src="media/02-its-good.jpg" alt="It's good! showing after a made kick"></div>
-          <div class="phone right"><img src="media/04-doink.jpg" alt="Doink, as the ball bounces off the upright"></div>
-          <div class="cta"><a class="button" href="support.html#how">How to play</a></div>
-        </section>
       </div>
 
-      <section class="endzone">
-        <h2>Become a sponsor</h2>
-        <a class="button" href="sponsor.html">Pick your spot</a>
-      </section>
     </main>
 
-    <footer class="site">
-      <p class="about">Uprights is a silly game made by Robbie Broome<br>Not affiliated with the NFL</p>
+    <footer class="site endzone">
       <nav aria-label="Footer">
         <a href="privacy.html">Privacy policy</a>
         <a href="sponsor.html">Sponsor</a>
         <a href="https://github.com/rbrmexyz/uprights/issues/new?title=Bug%3A%20">Report a bug</a>
         <a href="terms.html">Terms</a>
         <a href="support.html">Support</a>
-        <a href="https://apps.apple.com/us/search?term=uprights">Download</a>
+        <a href="https://apps.apple.com/app/id6817074074">Download</a>
       </nav>
     </footer>
   </div>
+  <script src="field.js?v=1790631535"></script>
 </body>
 </html>

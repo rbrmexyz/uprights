@@ -1,14 +1,13 @@
 :root {
-  --field: #5b8a67;
-  --stripe: rgba(18, 48, 26, 0.07);        /* mowing stripes, every other row */
-  --endzone: #4a7a57;
+  --field: #214e34;
+    --endzone: #183c27;
   --line: #ffffff;
   --ink: #ffffff;
   --ink-2: rgba(255, 255, 255, 0.84);
   --ink-3: rgba(255, 255, 255, 0.64);
   --bezel: #16181c;
   --rim: #7b7e86;
-  --button-ink: #24452e;
+  --button-ink: #214e34;
   --gold: #ffd23f;
   --lw: 3px;                               /* field line weight */
   --row: clamp(66px, 14vw, 104px);         /* one yard line to the next */
@@ -19,16 +18,19 @@
 }
 
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; min-height: 100%; background: var(--field); }
 body {
   margin: 0;
+  min-height: 100vh;
   background: var(--field);
   color: var(--ink);
   font: 16px/1.55 var(--text);
   padding-inline: 16px;
   overflow-x: hidden;
 }
-.page-wrap { max-width: 880px; margin: 0 auto; padding-block: 16px 36px; }
+.page-wrap { max-width: 880px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+.page-wrap > main { flex: 1; display: flex; flex-direction: column; }
+.page-wrap > main > .field { flex: 1; }
 a { color: inherit; }
 a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 
@@ -38,7 +40,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-
 @media (prefers-reduced-motion: reduce) { .fade-in { animation: none; } }
 
 /* Wordmark: tight, touching letters that span the column. */
-.wordmark { display: block; width: 100%; height: auto; margin-bottom: 14px; overflow: visible; }
+.wordmark { display: block; width: 100%; height: auto; overflow: visible; }
 .wordmark text { font-family: var(--wide); font-weight: 700; fill: var(--ink); }
 a.wordmark-link { display: block; text-decoration: none; }
 
@@ -47,39 +49,16 @@ a.wordmark-link { display: block; text-decoration: none; }
   position: relative;
   isolation: isolate;
 }
-.field::before {
-  content: "";
+/* Markings are drawn by field.js as one full-width layer under the content. */
+.field > svg.markings {
   position: absolute;
-  inset: 0 auto 0 50%;
-  width: 100vw;
+  top: 0;
+  left: 50%;
   transform: translateX(-50%);
   z-index: -1;
-  --edge: calc((100vw - var(--col)) / 2);
-  background:
-    /* sidelines */
-    linear-gradient(to right, transparent calc(var(--edge) - var(--lw)), var(--line) 0 var(--edge), transparent 0 calc(100vw - var(--edge)), var(--line) 0 calc(100vw - var(--edge) + var(--lw)), transparent 0),
-    /* yard lines */
-    repeating-linear-gradient(to bottom, transparent 0 calc(var(--row) - var(--lw)), var(--line) 0 var(--row)),
-    /* mowing stripes */
-    repeating-linear-gradient(to bottom, var(--stripe) 0 var(--row), transparent 0 calc(var(--row) * 2)),
-    /* grass grain */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1  0 0 0 0 0.25  0 0 0 0 0.12  0 0 0 0.16 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
 }
-/* Hash marks: short ticks every yard inside each sideline and at the middle. */
-.field::after {
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 50%;
-  width: var(--col);
-  transform: translateX(-50%);
-  z-index: -1;
-  --tick: repeating-linear-gradient(to bottom, transparent 0 calc(var(--row) / 5 - 2px), var(--line) 0 calc(var(--row) / 5));
-  background: var(--tick) 10px 0 / 16px 100% no-repeat,
-              var(--tick) calc(100% - 10px) 0 / 16px 100% no-repeat,
-              var(--tick) calc(50% - 44px) 0 / 14px 100% no-repeat,
-              var(--tick) calc(50% + 44px) 0 / 14px 100% no-repeat;
-  opacity: 0.9;
-}
+.row-probe { position: absolute; visibility: hidden; height: var(--row); width: 1px; }
 .band { position: relative; }
 
 /* ---------- Phones ---------- */
@@ -89,7 +68,7 @@ a.wordmark-link { display: block; text-decoration: none; }
   border-radius: clamp(14px, 3vw, 28px);
   background: var(--bezel);
   padding: clamp(4px, 0.75vw, 7px);
-  box-shadow: 0 0 0 1.5px var(--rim), 0 22px 44px rgba(14, 36, 20, 0.38);
+  box-shadow: 0 0 0 1.5px var(--rim), 0 70px 120px -6px rgba(0, 0, 0, 0.8), 0 26px 44px rgba(0, 0, 0, 0.55), 0 0 60px rgba(0, 0, 0, 0.3);
   max-width: 100%;
 }
 .phone > img, .phone > video {
@@ -121,44 +100,52 @@ a.wordmark-link { display: block; text-decoration: none; }
 .button:hover { background: var(--gold); }
 .button:active { transform: translateY(1px); }
 
-/* ---------- Home ---------- */
-.hero { height: calc(var(--row) * 4); }
-.hero .phone { height: calc(var(--row) * 3.55); top: calc(var(--row) * 0.22); left: 50%; transform: translateX(-50%); }
-.hero .pitch {
-  position: absolute;
-  left: 0;
-  top: calc(var(--row) * 1);
-  height: calc(var(--row) - var(--lw));
-  width: calc(50% - var(--row) * 1.1);
-  display: flex;
+/* App Store badge: Apple's standard flat black badge, lifted off the field by a soft shadow. */
+.store-badge {
+  display: inline-flex;
   align-items: center;
-  padding-left: 34px;
+  gap: 8px;
+  padding: 8px 18px 8px 14px;
+  border-radius: 12px;
+  color: #fff;
+  text-decoration: none;
+  background: #000;
+  border: 1px solid #a6a6a6;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+  transition: transform 150ms ease, box-shadow 150ms ease;
 }
-.hero .pitch p { margin: 0; font: 700 clamp(11px, 1.7vw, 16px)/1.3 var(--wide); letter-spacing: -0.03em; text-transform: uppercase; }
+.store-badge:hover { transform: translateY(-1px); box-shadow: 0 14px 34px rgba(0, 0, 0, 0.42); }
+.store-badge:active { transform: translateY(0); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35); }
+.store-badge:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+.store-badge .apple { width: 24px; height: 29px; flex: none; }
+.store-badge .words { display: grid; line-height: 1; }
+.store-badge small { font: 500 11px/1.15 -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; letter-spacing: 0.01em; }
+.store-badge strong { font: 600 23px/1.05 -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; letter-spacing: -0.02em; }
+
+/* ---------- Home ---------- */
+.hero { height: calc(var(--row) * 7.3); }
+.hero .phone { height: calc(var(--row) * 5.6); top: calc(var(--row) * 0.2); left: 50%; transform: translateX(-50%); }
+/* The download badge sits centred under the phone. */
 .hero .cta {
   position: absolute;
+  left: 0;
   right: 0;
-  top: calc(var(--row) * 1);
-  height: calc(var(--row) - var(--lw));
-  width: calc(50% - var(--row) * 1.1);
+  top: calc(var(--row) * 6.25);
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
 .trio { height: calc(var(--row) * 5); }
 .trio .phone { height: calc(var(--row) * 2.75); top: calc(var(--row) * 1.12); }
 .trio .phone.mid { height: calc(var(--row) * 3.3); top: calc(var(--row) * 0.85); left: 50%; transform: translateX(-50%); z-index: 1; }
-.trio .phone.left { left: 12%; transform: rotate(-4deg); }
-.trio .phone.right { right: 12%; transform: rotate(4deg); }
+.trio .phone.left { left: 12%; }
+.trio .phone.right { right: 12%; }
 .trio .cta { position: absolute; left: 0; right: 0; top: calc(var(--row) * 4); height: calc(var(--row) - var(--lw)); display: flex; align-items: center; justify-content: center; }
 
-/* The end zone: tinted, past the goal line, lettered like field paint. */
+/* End zones: the header and footer, tinted, between the end line and a thick goal line. */
 .endzone {
   position: relative;
   isolation: isolate;
-  text-align: center;
-  padding-block: calc(var(--row) * 0.55) calc(var(--row) * 0.7);
 }
 .endzone::before {
   content: "";
@@ -169,27 +156,60 @@ a.wordmark-link { display: block; text-decoration: none; }
   z-index: -1;
   --edge: calc((100vw - var(--col)) / 2);
   background:
-    linear-gradient(to right, transparent calc(var(--edge) - var(--lw)), var(--line) 0 var(--edge), transparent 0 calc(100vw - var(--edge)), var(--line) 0 calc(100vw - var(--edge) + var(--lw)), transparent 0),
-    linear-gradient(var(--line), var(--line)) 0 0 / 100% calc(var(--lw) * 2) no-repeat,
-    linear-gradient(var(--line), var(--line)) 0 100% / 100% var(--lw) no-repeat,
+    var(--end-line, none),
+    var(--goal-line, none),
     var(--endzone);
 }
-.endzone h2 { margin: 0 0 24px; font: 700 clamp(24px, 6.4vw, 58px)/0.95 var(--wide); letter-spacing: -0.07em; text-transform: uppercase; }
+header.endzone {
+  padding-block: clamp(18px, 3.4vw, 34px) clamp(18px, 3.2vw, 32px);
+  --end-line: linear-gradient(var(--line), var(--line)) 0 0 / 100% var(--lw) no-repeat;
+  --goal-line: linear-gradient(var(--line), var(--line)) 0 100% / 100% calc(var(--lw) * 2) no-repeat;
+}
+header.endzone .wordmark { margin: 0; padding-inline: clamp(8px, 2vw, 20px); }
+footer.endzone {
+  padding: clamp(22px, 3.6vw, 36px) clamp(12px, 2.6vw, 26px) clamp(24px, 4vw, 40px);
+  --goal-line: linear-gradient(var(--line), var(--line)) 0 0 / 100% calc(var(--lw) * 2) no-repeat;
+  --end-line: linear-gradient(var(--line), var(--line)) 0 100% / 100% var(--lw) no-repeat;
+}
 
-footer.site { padding-block: 30px 8px; }
+footer.site { text-align: center; }
 footer.site .about { font: 700 clamp(10px, 1.7vw, 14px)/1.45 var(--wide); text-transform: uppercase; letter-spacing: -0.03em; margin: 0 0 20px; }
-footer.site nav { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 16px; }
+footer.site nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 28px; }
 footer.site nav a { font: 700 clamp(8px, 1.15vw, 10px)/1.4 var(--wide); text-transform: uppercase; text-decoration: none; letter-spacing: -0.01em; opacity: 0.9; }
 footer.site nav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
 
 /* ---------- Sponsor page ---------- */
 .spots { display: grid; grid-template-columns: 1.05fr 1fr; gap: 0; padding-block: calc(var(--row) * 0.35) calc(var(--row) * 0.5); }
-.diagram { padding: 0 24px 0 20px; }
-.diagram svg { display: block; width: 100%; height: auto; }
-.diagram .part { fill: var(--field); stroke: var(--line); stroke-width: 3; transition: fill 220ms ease; }
-.diagram .solid { fill: var(--line); transition: fill 220ms ease; }
-.diagram .line { stroke: var(--line); stroke-width: 3; fill: none; }
-.diagram .on { fill: var(--gold); }
+/* The game itself, with a pulsing ring on the chosen spot. */
+.app-view { display: flex; justify-content: center; align-items: flex-start; padding: 0 20px; }
+.phone.still { position: relative; width: min(330px, 100%); height: auto; }
+.screen { position: relative; overflow: hidden; border-radius: clamp(10px, 2.3vw, 21px); }
+.screen img { display: block; width: 100%; height: auto; }
+.spot-ring {
+  position: absolute;
+  border: 3px solid var(--gold);
+  border-radius: 6px;
+  box-shadow: 0 0 0 9999px rgba(6, 12, 30, 0.5), 0 0 16px 3px rgba(255, 210, 63, 0.75);
+  transition: left 450ms cubic-bezier(.2, .8, .2, 1), top 450ms cubic-bezier(.2, .8, .2, 1),
+              width 450ms cubic-bezier(.2, .8, .2, 1), height 450ms cubic-bezier(.2, .8, .2, 1);
+  pointer-events: none;
+}
+.spot-ring::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border: 3px solid var(--gold);
+  border-radius: 8px;
+  animation: ping 1.5s cubic-bezier(.2, .6, .3, 1) infinite;
+}
+@keyframes ping {
+  from { inset: -3px; opacity: 0.9; }
+  to { inset: -16px; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spot-ring { transition: none; }
+  .spot-ring::after { animation: none; opacity: 0; }
+}
 
 /* The picker sits on a solid panel so yard lines don't cut through it. */
 .picker {
@@ -219,13 +239,11 @@ footer.site nav a:hover { opacity: 1; text-decoration: underline; text-underline
 }
 .slots button:hover { border-color: var(--line); }
 .slots button[aria-pressed="true"] { background: var(--line); border-color: var(--line); color: var(--button-ink); }
-.shot { margin: 0; }
-.shot img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; box-shadow: 0 0 0 2px var(--line); }
-.shot figcaption { margin-top: 8px; font-size: 12px; color: var(--ink-3); }
 .detail h2 { margin: 0 0 6px; font: 700 clamp(15px, 2.2vw, 19px)/1.2 var(--wide); text-transform: uppercase; letter-spacing: -0.03em; }
 .detail p { margin: 0 0 6px; color: var(--ink-2); font-size: 15px; }
 .detail .spec { color: var(--ink-3); font-size: 13px; }
 .picker .button { justify-self: start; }
+.plain-note { margin: 0; font-size: 13px; color: var(--ink-3); }
 
 /* ---------- Text pages ---------- */
 .doc {
@@ -244,15 +262,13 @@ footer.site nav a:hover { opacity: 1; text-decoration: underline; text-underline
 .doc ul { padding-left: 1.2em; }
 
 @media (max-width: 680px) {
-  .hero { height: calc(var(--row) * 5); }
-  .hero .phone { height: calc(var(--row) * 3.5); top: calc(var(--row) * 0.25); }
-  .hero .pitch { display: none; }
-  .hero .cta { top: calc(var(--row) * 4); width: 100%; }
+  .hero { height: calc(var(--row) * 7.3); }
+  .hero .phone { height: calc(var(--row) * 4.6); top: calc(var(--row) * 0.2); }
+  .hero .cta { top: calc(var(--row) * 5.1); }
   .trio .phone { height: calc(var(--row) * 2.3); top: calc(var(--row) * 1.3); }
   .trio .phone.left { left: 3%; }
   .trio .phone.right { right: 3%; }
   .spots { grid-template-columns: 1fr; gap: 20px; }
-  .diagram { padding: 0 12px; }
+  .app-view { padding: 0 12px; }
   .picker { margin: 0; }
-  .field::after { background: none; }
 }

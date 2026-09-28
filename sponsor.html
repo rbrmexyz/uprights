@@ -9,11 +9,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=1790629382">
+  <link rel="stylesheet" href="style.css?v=1790631535">
 </head>
 <body>
   <div class="page-wrap">
-    <header>
+    <header class="endzone">
       <a class="wordmark-link fade-in" href="./" aria-label="Uprights home">
         <svg class="wordmark" viewBox="0 0 1000 118" role="img" aria-hidden="true">
           <text x="0" y="116" font-size="157" textLength="1000" lengthAdjust="spacing">UPRIGHTS</text>
@@ -22,93 +22,66 @@
     </header>
 
     <main>
-      <div class="field">
+      <div class="field"><span class="row-probe"></span>
         <section class="spots">
-          <div class="diagram">
-            <svg viewBox="0 0 450 512" aria-label="Diagram of the stadium. The chosen sponsor spot is highlighted.">
-              <!-- Field: sideline in perspective and yard lines -->
-              <path class="line" d="M378 350 L450 476 M0 424 L420 424 M0 476 L450 476"/>
-              <!-- Video board, top left -->
-              <rect id="d-video" class="part" x="1.5" y="1.5" width="231" height="56"/>
-              <!-- LED ribbon between the tiers -->
-              <rect id="d-ribbon" class="part" x="1.5" y="113" width="376" height="35"/>
-              <!-- Net between the uprights -->
-              <rect id="d-net" class="part" x="76" y="75" width="111" height="172" style="stroke:none"/>
-              <!-- Goal post: uprights and crossbar -->
-              <rect class="solid" x="38" y="75" width="38" height="208"/>
-              <rect class="solid" x="187" y="75" width="38" height="208"/>
-              <rect class="solid" x="57" y="247" width="152" height="36"/>
-              <!-- Wall boards -->
-              <rect id="d-wall" class="part" x="1.5" y="312" width="376" height="38"/>
-              <!-- Post pad, over the wall -->
-              <rect id="d-pad" class="solid" x="115" y="283" width="38" height="92"/>
-              <!-- Ball on its tee -->
-              <path id="d-tee" class="solid" d="M262 470 L286 470 L282 455 L266 455 Z"/>
-              <ellipse id="d-ball" class="solid" cx="274" cy="435" rx="11" ry="19"/>
-            </svg>
+          <div class="app-view">
+            <div class="phone still">
+              <div class="screen">
+                <img src="media/sponsored.jpg" alt="The Uprights stadium with every sponsor spot filled with sample brands">
+                <span class="spot-ring" id="ring" aria-hidden="true"></span>
+              </div>
+            </div>
           </div>
 
           <div class="picker">
-            <h1>Select a sponsor spot</h1>
+            <h1>Pick a sponsor spot</h1>
             <ul class="slots" id="slots"></ul>
-            <figure class="shot">
-              <img id="shot" src="media/spot-net.jpg" alt="">
-              <figcaption>In the game, with a sample brand</figcaption>
-            </figure>
             <div class="detail" id="detail" aria-live="polite"></div>
+            <p class="plain-note">Spots nobody books stay plain stadium, so the game never looks like a billboard. Artwork swaps in without an app update.</p>
             <a class="button" id="book" href="https://github.com/rbrmexyz/uprights/issues/new?title=Sponsor%3A%20The%20net">Book this spot</a>
           </div>
         </section>
       </div>
 
-      <section class="endzone">
-        <h2>Every spot starts plain</h2>
-        <p style="margin:0 auto 22px;max-width:46ch;color:var(--ink-2)">Spots nobody has booked stay plain stadium, so the game never looks like a billboard. Your artwork swaps in without an app update.</p>
-        <a class="button" href="./">Back to the game</a>
-      </section>
     </main>
 
-    <footer class="site">
-      <p class="about">Uprights is a silly game made by Robbie Broome<br>Not affiliated with the NFL</p>
+    <footer class="site endzone">
       <nav aria-label="Footer">
         <a href="privacy.html">Privacy policy</a>
         <a href="./">Home</a>
         <a href="https://github.com/rbrmexyz/uprights/issues/new?title=Bug%3A%20">Report a bug</a>
         <a href="terms.html">Terms</a>
         <a href="support.html">Support</a>
-        <a href="https://apps.apple.com/us/search?term=uprights">Download</a>
+        <a href="https://apps.apple.com/app/id6817074074">Download</a>
       </nav>
     </footer>
   </div>
 
   <script>
     const slots = [
-      { id: "net",    name: "The net",     hint: "Every kick",  about: "Printed on the net behind the posts. It's framed by the uprights on every single kick, and it billows when the ball hits it.", spec: "Transparent PNG, 1024×410" },
-      { id: "pad",    name: "Post pad",    hint: "Full wrap",   about: "Your colour wraps the goal post pad top to bottom, with your logo running up the side that faces the kicker.", spec: "Logo 512×128, or a full wrap 1024×920" },
-      { id: "ball",   name: "The ball",    hint: "In flight",   about: "Printed along a panel of the ball. It tumbles end over end through every kick.", spec: "Transparent PNG, 512×128" },
-      { id: "tee",    name: "The tee",     hint: "Under thumb", about: "The kicking tee in your colours, right where every player puts their thumb.", spec: "Logo 512×128" },
-      { id: "video",  name: "Video board", hint: "Scoreboard",  about: "A strip under the streak, attempt and wind: “This kick brought to you by…”", spec: "1068×64" },
-      { id: "ribbon", name: "LED ribbon",  hint: "Scrolling",   about: "The glowing ribbon between the tiers, scrolling your message around the stadium.", spec: "1024×48" },
-      { id: "wall",   name: "Wall boards", hint: "Field level", about: "Four LED boards along the field wall, right behind the end zone.", spec: "256×44 each, up to 4" },
+      { id: "net", at: [25, 27.2, 50, 4.9],    name: "The net",     hint: "Every kick",  about: "Printed on the net behind the posts. It's framed by the uprights on every single kick, and it billows when the ball hits it.", spec: "Transparent PNG, 1024×410" },
+      { id: "pad", at: [46.8, 48.4, 6, 8.4],    name: "Post pad",    hint: "Full wrap",   about: "Your colour wraps the goal post pad top to bottom, with your logo running up the side that faces the kicker.", spec: "Logo 512×128, or a full wrap 1024×920" },
+      { id: "ball", at: [44.4, 73.2, 11.2, 8.2],   name: "The ball",    hint: "In flight",   about: "Printed along a panel of the ball. It tumbles end over end through every kick.", spec: "Transparent PNG, 512×128" },
+      { id: "tee", at: [45, 80.8, 10, 3.8],    name: "The tee",     hint: "Under thumb", about: "The kicking tee in your colours, right where every player puts their thumb.", spec: "Logo 512×128" },
+      { id: "video", at: [16.5, 13.6, 68, 10],  name: "Video board", hint: "Scoreboard",  about: "A strip under the streak, attempt and wind: “This kick brought to you by…”", spec: "1068×64" },
+      { id: "ribbon", at: [0, 33.4, 100, 2.4], name: "LED ribbon",  hint: "Scrolling",   about: "The glowing ribbon between the tiers, scrolling your message around the stadium.", spec: "1024×48" },
+      { id: "wall", at: [0, 50.8, 100, 2.6],   name: "Wall boards", hint: "Field level", about: "Four LED boards along the field wall, right behind the end zone.", spec: "256×44 each, up to 4" },
     ];
     const list = document.getElementById("slots");
     const detail = document.getElementById("detail");
     const book = document.getElementById("book");
-    const shot = document.getElementById("shot");
-    const parts = { net: ["d-net"], pad: ["d-pad"], ball: ["d-ball"], tee: ["d-tee"], video: ["d-video"], ribbon: ["d-ribbon"], wall: ["d-wall"] };
+    const ring = document.getElementById("ring");
 
     function select(id) {
       const s = slots.find(x => x.id === id);
       list.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.id === id)));
-      document.querySelectorAll(".diagram .on").forEach(el => el.classList.remove("on"));
-      parts[id].forEach(p => document.getElementById(p).classList.add("on"));
       detail.innerHTML = "";
       const h = document.createElement("h2"); h.textContent = s.name;
       const p = document.createElement("p"); p.textContent = s.about;
       const sp = document.createElement("p"); sp.className = "spec"; sp.textContent = "Artwork: " + s.spec;
       detail.append(h, p, sp);
-      shot.src = "media/spot-" + id + ".jpg";
-      shot.alt = s.name + " in the game, with a sample brand";
+      const r = s.at;
+      Object.assign(ring.style, { left: r[0] + "%", top: r[1] + "%", width: r[2] + "%", height: r[3] + "%" });
       book.href = "https://github.com/rbrmexyz/uprights/issues/new?title=" + encodeURIComponent("Sponsor: " + s.name);
     }
     for (const s of slots) {
@@ -121,8 +94,8 @@
       li.append(b);
       list.append(li);
     }
-    for (const s of slots) { const i = new Image(); i.src = "media/spot-" + s.id + ".jpg"; }
-    select("net");
+    select(slots.some(x => x.id === location.hash.slice(1)) ? location.hash.slice(1) : "net");
   </script>
+  <script src="field.js?v=1790631535"></script>
 </body>
 </html>
