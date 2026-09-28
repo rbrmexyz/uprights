@@ -4,60 +4,65 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Uprights — Paper Toss, but it's a field goal</title>
-  <meta name="description" content="Flick to kick. Read the wind. Don't doink it. A field goal game for iPhone.">
+  <meta name="description" content="Flick to kick. Read the wind. Don't doink it. A silly field goal game for iPhone.">
   <meta property="og:title" content="Uprights">
   <meta property="og:description" content="Paper Toss, but it's a field goal. Flick to kick, read the wind, don't doink it.">
   <meta property="og:image" content="https://rbrmexyz.github.io/uprights/media/poster.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="media/icon.png">
   <link rel="apple-touch-icon" href="media/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="wrap">
-    <header class="site">
-      <img src="media/icon.png" alt="">
-      <a class="name" href="./">Uprights</a>
+  <div class="page-wrap">
+    <header>
+      <a class="wordmark-link fade-in" href="./" aria-label="Uprights home">
+        <svg class="wordmark" viewBox="0 0 1000 150" role="img" aria-hidden="true">
+          <text x="0" y="138" font-size="176" textLength="1000" lengthAdjust="spacingAndGlyphs">UPRIGHTS</text>
+        </svg>
+      </a>
     </header>
 
     <main>
-      <section class="hero">
-        <div>
-          <h1 class="fade-in">Paper Toss, but it's a <em>field goal.</em></h1>
-          <p class="lede fade-in late">Flick to kick. Read the wind. Don't doink it. One miss and your streak is gone.</p>
-          <p class="soon fade-in late">Coming soon on iPhone<span>Free. No pop-up ads, ever.</span></p>
-        </div>
-        <div class="phone">
-          <video src="media/uprights-trailer.mp4" poster="media/poster.jpg" autoplay muted loop playsinline aria-label="Uprights gameplay: flicking field goals through the uprights in a night stadium"></video>
-        </div>
-      </section>
+      <div class="field">
+        <section class="block hero" style="height: calc(var(--row) * 3.5)">
+          <p class="tagline">Paper Toss, but it's a field goal.</p>
+          <div class="phone">
+            <video src="media/uprights-trailer.mp4" poster="media/poster.jpg" autoplay muted loop playsinline
+                   aria-label="Uprights gameplay: flicking field goals in a night stadium"></video>
+          </div>
+          <a class="button" href="https://github.com/rbrmexyz/uprights/issues/new?title=Beta%20invite">Join the beta</a>
+        </section>
 
-      <section class="how" aria-labelledby="how-title">
-        <h2 id="how-title">Easy to flick. Hard to stop.</h2>
-        <div class="cards">
-          <article class="card">
-            <img src="media/01-flick.jpg" alt="A finger pressing on the football, ready to flick">
-            <h3>Where you strike it matters</h3>
-            <p>Hit it clean and it flies true. Catch the side and it hooks. Top it and it skims. Swing too hard for a chip shot and you'll overcook it.</p>
-          </article>
-          <article class="card">
-            <img src="media/03-crosswind.jpg" alt="A 36-yard attempt with a 17 mph wind showing on the scoreboard">
-            <h3>The wind bites late</h3>
-            <p>The ball holds its line on the way up, then the wind grabs it on the way down. Aim off the posts and trust it.</p>
-          </article>
-          <article class="card">
-            <img src="media/04-doink.jpg" alt="The ball bouncing off the upright with Doink on screen">
-            <h3>Keep the streak alive</h3>
-            <p>Every make ramps the wind and sharpens the angles. Miss once and it's over. The leaderboard remembers.</p>
-          </article>
-        </div>
+        <section class="block trio" style="height: calc(var(--row) * 4.5)" aria-label="Screens from the game">
+          <div class="phone left"><img src="media/03-crosswind.jpg" alt="A 36-yard attempt into a 17 mph wind"></div>
+          <div class="phone mid"><img src="media/02-its-good.jpg" alt="It's good! showing after a made kick"></div>
+          <div class="phone right"><img src="media/04-doink.jpg" alt="Doink, as the ball bounces off the upright"></div>
+          <a class="button" href="support.html#how">How to play</a>
+        </section>
+
+        <div class="block" style="height: calc(var(--row) * 1)"></div>
+      </div>
+
+      <section class="sponsor-box">
+        <h2>Become a sponsor</h2>
+        <a class="button" href="sponsor.html">Pick your spot</a>
       </section>
     </main>
 
     <footer class="site">
-      <span>Made by Robbie Broome</span>
-      <a href="privacy.html">Privacy</a>
-      <a href="support.html">Support</a>
+      <p class="about">Uprights is a silly game made by Robbie Broome<br>Not affiliated with the NFL</p>
+      <nav aria-label="Footer">
+        <a href="privacy.html">Privacy policy</a>
+        <a href="sponsor.html">Sponsor</a>
+        <a href="https://github.com/rbrmexyz/uprights/issues/new?title=Bug%3A%20">Report a bug</a>
+        <a href="terms.html">Terms</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/rbrmexyz/uprights/issues/new?title=Beta%20invite">Download</a>
+      </nav>
     </footer>
   </div>
 </body>

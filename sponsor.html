@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Uprights — Sponsor a spot</title>
+  <meta name="description" content="Put your brand in the Uprights stadium: the net, the post pad, the ball, the boards.">
+  <link rel="icon" href="media/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-wrap">
+    <header>
+      <a class="wordmark-link fade-in" href="./" aria-label="Uprights home">
+        <svg class="wordmark" viewBox="0 0 1000 150" role="img" aria-hidden="true">
+          <text x="0" y="138" font-size="176" textLength="1000" lengthAdjust="spacingAndGlyphs">UPRIGHTS</text>
+        </svg>
+      </a>
+    </header>
+
+    <main>
+      <div class="field sponsor-field">
+        <div class="diagram">
+          <svg viewBox="0 0 450 512" preserveAspectRatio="xMinYMin meet" aria-label="Diagram of the stadium showing each sponsor spot">
+            <!-- Video board, top left -->
+            <rect id="d-video" class="part" x="1.5" y="1.5" width="231" height="56"/>
+            <!-- LED ribbon between the tiers -->
+            <rect id="d-ribbon" class="part" x="1.5" y="113" width="376" height="35"/>
+            <!-- Net between the uprights -->
+            <rect id="d-net" class="part" x="76" y="75" width="111" height="172" style="stroke:none"/>
+            <!-- Goal post: uprights and crossbar -->
+            <rect class="solid" x="38" y="75" width="38" height="208"/>
+            <rect class="solid" x="187" y="75" width="38" height="208"/>
+            <rect class="solid" x="57" y="247" width="152" height="36"/>
+            <!-- Post pad -->
+            <rect id="d-pad" class="solid" x="115" y="283" width="38" height="89"/>
+            <!-- Wall boards -->
+            <rect id="d-wall" class="part" x="1.5" y="312" width="373" height="36"/>
+            <!-- Field: sideline in perspective and yard lines -->
+            <path class="line" d="M374 348 L447 475 M0 423 L417 423 M0 475 L450 475"/>
+            <!-- Ball on its tee -->
+            <path id="d-tee" class="solid" d="M262 470 L286 470 L282 456 L266 456 Z"/>
+            <ellipse id="d-ball" class="solid" cx="274" cy="436" rx="11" ry="19"/>
+          </svg>
+        </div>
+
+        <div class="picker">
+          <div class="top">
+            <h1>Select a sponsor spot</h1>
+            <a class="button" id="book" href="https://github.com/rbrmexyz/uprights/issues/new?title=Sponsor%3A%20The%20net">Book it</a>
+          </div>
+          <ul class="slots" id="slots"></ul>
+          <div class="detail" id="detail" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <section class="preview">
+        <div class="phone"><img src="media/sponsored.jpg" alt="The stadium with every sponsor spot filled with sample brands"></div>
+        <div>
+          <h2>Every spot, filled</h2>
+          <p>This is the stadium with sample brands in every spot. Spots nobody has booked stay plain stadium, so the game never looks like a billboard.</p>
+          <p>Artwork swaps in without an app update. Send a logo, and it's on the field within minutes.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site">
+      <p class="about">Uprights is a silly game made by Robbie Broome<br>Not affiliated with the NFL</p>
+      <nav aria-label="Footer">
+        <a href="privacy.html">Privacy policy</a>
+        <a href="./">Home</a>
+        <a href="https://github.com/rbrmexyz/uprights/issues/new?title=Bug%3A%20">Report a bug</a>
+        <a href="terms.html">Terms</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/rbrmexyz/uprights/issues/new?title=Beta%20invite">Download</a>
+      </nav>
+    </footer>
+  </div>
+
+  <script>
+    const slots = [
+      { id: "net",    name: "The net",     hint: "Every kick",  about: "Printed on the net behind the posts. It's framed by the uprights on every single kick, and it billows when the ball hits it.", spec: "Transparent PNG, 1024×410" },
+      { id: "pad",    name: "Post pad",    hint: "Full wrap",   about: "Your colour wraps the goal post pad top to bottom, with your logo running up the side that faces the kicker.", spec: "Logo 512×128, or a full wrap 1024×920" },
+      { id: "ball",   name: "The ball",    hint: "In flight",   about: "Printed along a panel of the ball. It tumbles end over end through every kick.", spec: "Transparent PNG, 512×128" },
+      { id: "tee",    name: "The tee",     hint: "Under thumb", about: "The kicking tee in your colours, right where every player puts their thumb.", spec: "Logo 512×128" },
+      { id: "video",  name: "Video board", hint: "Scoreboard",  about: "A strip under the streak, attempt and wind: “This kick brought to you by…”", spec: "1068×64" },
+      { id: "ribbon", name: "LED ribbon",  hint: "Scrolling",   about: "The glowing ribbon between the tiers, scrolling your message around the stadium.", spec: "1024×48" },
+      { id: "wall",   name: "Wall boards", hint: "Field level", about: "Four LED boards along the field wall, right behind the end zone.", spec: "256×44 each, up to 4" },
+    ];
+    const list = document.getElementById("slots");
+    const detail = document.getElementById("detail");
+    const book = document.getElementById("book");
+    const parts = { net: ["d-net"], pad: ["d-pad"], ball: ["d-ball"], tee: ["d-tee"], video: ["d-video"], ribbon: ["d-ribbon"], wall: ["d-wall"] };
+
+    function select(id) {
+      const s = slots.find(x => x.id === id);
+      list.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.id === id)));
+      document.querySelectorAll(".diagram .on").forEach(el => el.classList.remove("on"));
+      parts[id].forEach(p => document.getElementById(p).classList.add("on"));
+      detail.innerHTML = "";
+      const h = document.createElement("h2"); h.textContent = s.name;
+      const p = document.createElement("p"); p.textContent = s.about;
+      const sp = document.createElement("p"); sp.className = "spec"; sp.textContent = "Artwork: " + s.spec;
+      detail.append(h, p, sp);
+      book.href = "https://github.com/rbrmexyz/uprights/issues/new?title=" + encodeURIComponent("Sponsor: " + s.name);
+    }
+    for (const s of slots) {
+      const li = document.createElement("li");
+      const b = document.createElement("button");
+      b.type = "button";
+      b.dataset.id = s.id;
+      b.append(s.name);
+      const hint = document.createElement("span"); hint.textContent = s.hint;
+      b.append(hint);
+      b.addEventListener("click", () => select(s.id));
+      li.append(b);
+      list.append(li);
+    }
+    select("net");
+  </script>
+</body>
+</html>
